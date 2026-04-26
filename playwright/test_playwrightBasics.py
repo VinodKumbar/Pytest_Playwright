@@ -1,6 +1,6 @@
 import time
 
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page, expect, Playwright
 
 
 def test_playwrightBasics(playwright):
@@ -54,3 +54,13 @@ def test_switchTabs(page:Page):
     time.sleep(5)
     page.get_by_role("link", name="Logout").click()
     expect(page.locator("text=Welcome to Ohreems Automation Shop")).to_be_visible()
+
+def test_firefoxBrowser(playwright : Playwright):
+        firefoxBrowser = playwright.firefox
+        browser = firefoxBrowser.launch(headless=False)
+        page = browser.new_page()
+        page.goto("https://ohreems-automation-shop.netlify.app/")
+        page.get_by_label("Username").fill("john")
+        page.get_by_label("Password").fill("wick123")
+        page.get_by_role("button", name="Login").click()
+        time.sleep(5)
