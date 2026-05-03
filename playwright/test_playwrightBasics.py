@@ -11,36 +11,43 @@ def test_playwrightBasics(playwright):
     page = context.new_page()
     page.goto("https://ohreems-automation-shop.netlify.app/")
 
+
 #Chromium engine, headless mode , 1 single context
-def test_playwrightShortcut(page:Page):
+def test_playwrightShortcut(page: Page):
     page.goto("https://ohreems-automation-shop.netlify.app/")
 
-def test_coreLocators(page:Page):
+
+def test_coreLocators(page: Page):
     page.goto("https://ohreems-automation-shop.netlify.app/")
     page.get_by_label("Username").fill("john")
     page.get_by_label("Password").fill("wick123")
     page.get_by_role("button", name="Login").click()
     time.sleep(5)
 
-def test_switchTabs(page:Page):
+
+def test_childWindowHandle(page: Page):
     page.goto("https://ohreems-automation-shop.netlify.app/")
 
-    # click "Forgot Password?" and wait for new tab to open
-    #Listens for a new tab opening
-    with page.context.expect_page() as new_page_info:
-             page.get_by_role("link", name="Forgot Password?").click()
+    # click "Forgot Password?" and wait for new page to open
+    #Listens for a new page opening
+    #build a closure
+    # A closure is a function that remembers variables from its outer scope,
+    # even after the outer function has finished executing.
+
+    with page.context.expect_page() as newPage_info:
+        page.get_by_role("link", name="Forgot Password?").click()
 
     #capture new page
-    new_page = new_page_info.value
+    childpage = newPage_info.value
 
     # Wait for new tab to load
-    new_page.wait_for_load_state()
+    childpage.wait_for_load_state()
 
     time.sleep(5)
 
     # Validate new page opened (optional)
-    print("New Tab URL:", new_page.url)
-    expect(page.locator("text=Forgot Password")).to_be_visible()
+    print("New Tab URL:", childpage.url)
+    expect(childpage.locator("text=Send Reset Link")).to_be_visible()
 
     # Switch back to original login page
     page.bring_to_front()
@@ -55,12 +62,13 @@ def test_switchTabs(page:Page):
     page.get_by_role("link", name="Logout").click()
     expect(page.locator("text=Welcome to Ohreems Automation Shop")).to_be_visible()
 
-def test_firefoxBrowser(playwright : Playwright):
-        firefoxBrowser = playwright.firefox
-        browser = firefoxBrowser.launch(headless=False)
-        page = browser.new_page()
-        page.goto("https://ohreems-automation-shop.netlify.app/")
-        page.get_by_label("Username").fill("john")
-        page.get_by_label("Password").fill("wick123")
-        page.get_by_role("button", name="Login").click()
-        time.sleep(5)
+
+def test_firefoxBrowser(playwright: Playwright):
+    firefoxBrowser = playwright.firefox
+    browser = firefoxBrowser.launch(headless=False)
+    page = browser.new_page()
+    page.goto("https://ohreems-automation-shop.netlify.app/")
+    page.get_by_label("Username").fill("john")
+    page.get_by_label("Password").fill("wick123")
+    page.get_by_role("button", name="Login").click()
+    time.sleep(5)
