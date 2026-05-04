@@ -17,7 +17,7 @@ def test_playwrightShortcut(page: Page):
     page.goto("https://ohreems-automation-shop.netlify.app/")
 
 
-def test_coreLocators(page: Page):
+def test_loginPage(page: Page):
     page.goto("https://ohreems-automation-shop.netlify.app/")
     page.get_by_label("Username").fill("john")
     page.get_by_label("Password").fill("wick123")
