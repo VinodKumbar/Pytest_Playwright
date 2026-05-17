@@ -1,0 +1,66 @@
+# Pytest Fixtures - Quick Notes
+
+## 1) What is a fixture?
+A fixture is a reusable setup function in pytest.
+It prepares resources that tests need (test data, browser/session, temp files, DB connection, API client).
+
+## 2) Why use fixtures?
+1. Keep tests clean and short.
+2. Avoid duplicate setup code.
+3. Centralize setup and teardown logic.
+4. Improve maintainability and readability.
+
+
+## 4) Fixture scope
+Fixture scope controls how often the fixture is created and destroyed.
+
+- `function` (default): once per test function
+- `class`: once per test class
+- `module`: once per test file
+- `package`: once per package
+- `session`: once per full test run
+
+### Scope behavior examples
+- If scope is `function`: setup/teardown happens for every test.
+- If scope is `module`: setup once for the file, teardown once after all tests in that file.
+- If scope is `session`: setup once for the entire run, reused by all tests.
+
+## 5) Notes for your current file (`test_validation.py`)
+- `pre_setup` with `scope="module"` runs once for both tests in the file.
+- `post_setup` with `scope="function"` runs for each test and tears down after each test.
+
+## 6) Pytest command line usage
+
+
+1. Run all discovered tests:
+pytest -s
+
+2. Run a specific test file:
+pytest test_validation.py
+
+3. Run a specific test function:
+
+pytest test_validation.py::test_initial_check
+
+4. Show print output (`print`) during test run:
+
+pytest -s test_validation.py
+
+5. Run tests with a specific marker (e.g., `@pytest.mark.smoke`):
+pytest -m slow
+
+6. Run tests in parallel (requires `pytest-xdist`):
+pytest -n 4
+
+7. Generate a test report in HTML format:
+pytest --html=report.html
+
+8. Open the generated HTML report in a browser:
+pytest --html=report.html --self-contained-html
+
+9. Skip tests with a specific marker (e.g., `@pytest.mark.skip`):
+pytest -m "not skip"
+
+
+
+

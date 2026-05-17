@@ -1,0 +1,33 @@
+These are the recommended built-in locators.
+
+1. page.get_by_role()
+                It finds elements on a webpage by their role (what they are)
+       button, link, textbox, checkbox, heading etc
+               to locate by text content.
+
+3. page.get_by_label()
+               to locate a form control by associated label's text.
+
+4. page.get_by_placeholder()
+               to locate an input by placeholder.
+
+5. page.get_by_alt_text()
+               to locate an element, usually image, by its text alternative.
+
+6. page.get_by_title()
+               to locate an element by its title attribute.
+
+7. page.get_by_test_id()
+               to locate an element based on its data-testid attribute (other attributes can be configured).
+
+
+******************************************************************************
+
+ Sync and Asysnc in Plawright
+
+
+        Feature	        Sync                 Async
+ 1     Execution	    One-by-one	Concurrent
+ 2     Waiting	        Blocking	    Non-blocking
+ 3     Speed	        Slower	        Faster (for many tasks)
+ 4     Complexity	Easy	            Medium

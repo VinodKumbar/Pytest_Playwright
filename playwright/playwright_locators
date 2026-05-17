@@ -1,0 +1,61 @@
+1. install Playwright Python package
+pip install playwright
+
+2. Install Browsers
+playwright install
+
+3. Install Pytest + Plugin
+pip install pytest pytest-playwright
+
+verify installation
+playwright --version
+
+*******************************************
+
+Pytest Playwright Locators Guide
+
+What is a Locator?
+A locator is how Playwright finds elements on a webpage.
+
+Common Playwright Locators:
+
+1. By Text
+page.locator("text=Forgot Password?").click()
+
+2. By ID
+page.locator("#username").fill("vinod")
+page.locator("#password").fill("1234")
+
+3. By Name
+page.locator("[name='username']").fill("vinod")
+
+4. By CSS Selector
+page.locator("input[type='text']").fill("vinod")
+
+5. By XPath (Avoid if possible)
+page.locator("//input[@id='username']").fill("vinod")
+
+6. By Role (Recommended)
+page.get_by_role("button", name="Login").click()
+page.get_by_role("link", name="Forgot Password?").click()
+
+7. By Label (Best for forms)
+page.get_by_label("Username").fill("vinod")
+page.get_by_label("Password").fill("1234")
+
+8. By Placeholder
+page.get_by_placeholder("Username").fill("vinod")
+
+Example Test:
+
+def test_login(page):
+    page.goto("your_url")
+    page.get_by_label("Username").fill("vinod")
+    page.get_by_label("Password").fill("1234")
+    page.get_by_role("button", name="Login").click()
+
+Best Practices:
+- Prefer get_by_role and get_by_label
+- Use ID when available
+- Avoid XPath and index-based locators
+
